@@ -1,0 +1,53 @@
+#*******************************************************************************
+#	Diyanada J. Gunawardena
+# 	diyanada@gmail.com
+# 	Dynamete Software Solutions
+#*******************************************************************************
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.+)$ /hostage.php?_Url=/$1 [QSA,L]
+</IfModule>
+
+# suppress PHP errors from displaying in the browser
+php_flag display_startup_errors off
+php_flag display_errors off
+php_flag html_errors off
+
+# log PHP errors to a file
+php_flag log_errors on
+php_value error_reporting 32767
+php_value error_log "log/errors.log"
+
+
+<Files *.*>
+    order allow,deny
+    deny from all
+    satisfy all
+</Files>
+
+<Files *.png>
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+<Files *.json>
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+<Files *.xml>
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+Options -Indexes
+
+
+
+
+
+
