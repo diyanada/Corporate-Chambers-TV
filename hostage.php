@@ -7,6 +7,10 @@
 //******************************************************************************
 
 
-include_once (dirname(__FILE__) . "/default.xhtml");
+
+
+
+
+include_once(dirname(__FILE__) . "/default.php");
 
 
