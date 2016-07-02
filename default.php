@@ -38,6 +38,8 @@ and open the template in the editor.
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
+
+        <div class="container">
         <div class="navbar-header header-size">
             <button type="button"
                     class="navbar-toggle collapsed"
@@ -60,8 +62,9 @@ and open the template in the editor.
                 <li><a href="#">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
+        </ul>
 
-
+            <ul class="nav navbar-nav navbar-right">
                     <?php
                     //https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId=UCyt1vzfb8DVSq49pySbzWKw&key={YOUR_API_KEY}
                     $json = file_get_contents("https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId=UCyt1vzfb8DVSq49pySbzWKw&key=AIzaSyD7AILUDSS8N5WVQupOqBmRLOmDtpYth3w");
@@ -82,13 +85,17 @@ and open the template in the editor.
                         $json = file_get_contents("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId={$pid}&key=AIzaSyD7AILUDSS8N5WVQupOqBmRLOmDtpYth3w");
                         $var=preg_replace('/.+?({.+}).+/','$1',$json);
                         $obj = json_decode($var);
+                        $count=count($obj->items);
 
-                        echo '<ul class="dropdown-menu">';
-                        foreach($obj->items as $item) {
 
-                            echo'<li><a href="#" class="vid" vid="'.$item->snippet->resourceId->videoId.'">'.$item->snippet->title.'</a></li>';
+                        if($count>0) {
+                            echo '<ul class="dropdown-menu">';
+                            foreach ($obj->items as $item) {
+
+                                echo '<li><a href="#" class="vid" vid="' . $item->snippet->resourceId->videoId . '">' . $item->snippet->title . '</a></li>';
+                            }
+                            echo '</ul>';
                         }
-                        echo '</ul>';
 
                     }
                     echo '</li>';
@@ -101,17 +108,24 @@ and open the template in the editor.
         </div>
 
 
+        </div>
     </div>
 </nav>
 
 
 
+<div class="container-fluid">
+<div class="container">
 
+<div class="jumbotron">
 
-    <iframe class="embed-responsive-item embend" src="https://www.youtube.com/embed/zglGKHlHJUA"></iframe>
+<div class="embed-responsive embed-responsive-16by9">
+    <iframe class="embed-responsive-item embend" src="https://www.youtube.com/embed/zglGKHlHJUA?showinfo=0&rel=0" ></iframe>
 </div>
 
-
+</div>
+</div>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="script/js/bootstrap.min.js"></script>
@@ -121,10 +135,11 @@ and open the template in the editor.
         $( ".vid" ).each(function() {
             $( this ).click(function(){
                 var vid=$(this).attr('vid');
-                var url="https://www.youtube.com/embed/"+vid;
+                var url="https://www.youtube.com/embed/"+vid+"?showinfo=0&rel=0";
 
 
                 $('.embend').attr('src',url);
+                $('#navbar').collapse('hide');
             });
         });
 
